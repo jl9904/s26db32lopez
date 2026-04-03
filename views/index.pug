@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p This is a minor change.
+
+  button(type="button", class="btn btn-info", onclick="reduce()") Sample Button
+
+  div(id="use") take some away
+  script.
+    let current = 11;
+    let quantity = 2;
+
+    function reduce(){
+      current -= quantity;
+      if(current < 0) {
+        current = 0;
+      }
+      document.getElementById('use').innerText = `Reduced by ${quantity} to ${current}`;
+    }
+  hr
+  a(href="/lighthouse") View Lighthouse Results

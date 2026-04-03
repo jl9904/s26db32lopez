@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+    - var image_names = ['lh1.png', 'lh2.png', 'lh3.png', 'lh4.png', 'lh5.png']
+
+  - for(let i=0; i<3; i++) {
+    - let randomIndex = Math.floor(Math.random() * 5)
+    - let selectedImage = image_names[randomIndex]
+
+    img(
+      src=`/images/${selectedImage}`, 
+      alt=`Random lighthouse image: ${selectedImage}`, 
+      height="300", 
+      width="300"
+    )
+  - }
