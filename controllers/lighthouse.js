@@ -1,8 +1,16 @@
 var Lighthouse = require('../models/lighthouse');
 
 // List of all Lighthouses
-exports.lighthouse_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: Lighthouse list');
+exports.lighthouse_list = async function(req, res) {
+    try {
+        // query the database to find all lighthouses
+        const theLighthouses = await Lighthouse.find();
+        res.send(theLighthouses);
+    }
+    catch(err) {
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
 };
 
 // Handle a specific Lighthouse detail request
