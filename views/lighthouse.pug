@@ -3,32 +3,15 @@ extends layout
 block content
   h1= title
 
-  -
-    let results = [
-      {
-        location: "Torre de Hércules",
-        height: "55",
-        light_pattern: "Flashing White"
-      },
-      {
-        location: "Portland Head Light",
-        height: "25",
-        light_pattern: "White light every 4 seconds"
-      },
-      {
-        location: "Bell Rock Lighthouse",
-        height: "35",
-        light_pattern: "Alternating Red and White"
-      }
-    ]
+  - let items = results
   
   div(class="container-fluid")
     div(class="row")
       each item, index in results 
         div(class="col-sm-2", onclick=`buy(${index})`)
-          h4 #{item.location}
-          p Height: #{item.height}m
-          p Light Pattern: #{item.light_pattern}
+          h3 #{item.name}
+          p Location: #{item.location}
+          p Height: #{item.height}ft
 
   script.
     function buy(index) {
