@@ -13,9 +13,16 @@ exports.lighthouse_list = async function(req, res) {
     }
 };
 
-// Handle a specific Lighthouse detail request
-exports.lighthouse_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Lighthouse detail: ' + req.params.id);
+// for a specific Lighthouse.
+exports.lighthouse_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+        let result = await Lighthouse.findById(req.params.id)
+        res.send(result)
+    } catch (error) {
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
 };
 
 // Handle Lighthouse create on POST.
