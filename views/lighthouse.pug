@@ -2,18 +2,15 @@ extends layout
 
 block content
   h1= title
-
   - let items = results
-  
   div(class="container-fluid")
-    div(class="row")
-      each item, index in results 
-        div(class="col-sm-2", onclick=`buy(${index})`)
-          h3 #{item.name}
-          p Location: #{item.location}
-          p Height: #{item.height}ft
+    div(class="row m-1")
+      each item in items
+        - let destination = `dispatch(\"/lighthouses/update?id=${item._id}\")`
+        div(class="row-sm-2", class="m-1") Item #{item.name}(#{item.location}) is #{item.height}ft 
+          button.btn( class="btn-primary ml-1", onclick= destination) Update
 
   script.
-    function buy(index) {
-      alert(`You purchased item ${index}`);
+    function dispatch(path){
+      window.location.href=path
     }
