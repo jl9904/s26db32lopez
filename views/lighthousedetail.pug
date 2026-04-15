@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to display
+  else
+    - let lighthouseid = toShow._id
+    - let name = toShow.name
+    - let location = toShow.location
+    - let height = toShow.height
+    div
+      div.row
+        div(class='lighthouseAttr mr-3') Lighthouse ID is:
+        div #{lighthouseid}
+      div.row
+        div(class='lighthouseAttr mr-3') Lighthouse Name is:
+        div #{name}
+      div.row
+        div(class='lighthouseAttr mr-3') Location is:
+        div #{location}
+      div.row
+        div(class='lighthouseAttr mr-3') Height is:
+        div #{height}ft
