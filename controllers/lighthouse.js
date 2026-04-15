@@ -104,3 +104,15 @@ exports.lighthouse_view_one_Page = async function(req, res) {
         res.send(`{'error': '${err}'}`);
     }
 };
+
+// Handle building the view for creating a lighthouse.
+exports.lighthouse_create_Page = function(req, res) {
+    console.log("create view");
+    try {
+        res.render('lighthousecreate', { title: 'Lighthouse Create' });
+    }
+    catch(err) {
+        res.status(500);
+        res.send(`{'error': '${err}'}`);
+    }
+};

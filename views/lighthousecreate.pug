@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h1= title
+  form(id='LighthouseForm', action="/resource/lighthouses", method="POST")
+    div.form-group
+        label.lighthouseAttr(for='name') Lighthouse Name
+        input#name(type='text', name='name')
+    div.form-group
+        label.lighthouseAttr(for='location') Location
+        input#location(type='text', name='location')
+    div.form-group
+        label.lighthouseAttr(for='height') Height
+        input#height(type='number', name='height')
+    input(type="submit")
+
+  script.
+    document.forms['LighthouseForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // Show user that form is being submitted
+      alert("Submitting form...")
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) 
+      }).then((resp) => {
+        return resp.json(); 
+      }).then((body) => {
+        alert("Save succeeded")
+        // Optionally redirect or clear form here
+      }).catch((error) => {
+        alert("Save failed " + error )
+      });
+    });
