@@ -7,8 +7,23 @@ a {
   color: #00B7FF;
 }
 
+/* Custom styling for a card-like feel */
+.lighthouse-card {
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 .lighthouseAttr {
-    background-color: aquamarine;
-    width: 150px;
-    font-weight: bold;
+    background-color: #007bff; /* Professional blue */
+    color: white;
+    width: 140px;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    margin-right: 15px;
+    display: inline-block;
 }

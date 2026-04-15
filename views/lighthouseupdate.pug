@@ -2,45 +2,40 @@ extends layout
 
 block content
   h1= title
-  
+
   if (toShow == null)
-    h2 No instance to update
+    h2 No instance to update for the provided ID.
+    button(class="btn btn-primary" onclick="window.location.href='/lighthouses'") Back to List
   else
     - let lighthouseid = toShow._id
     - let name = toShow.name
     - let location = toShow.location
     - let height = toShow.height
 
-    div.row(class='mb-2')
-      div.mr-1 ID is
-      div #{lighthouseid}
+    div(class="lighthouse-card")
+      div.row.mb-3
+        div.mr-1 ID is: 
+        b #{lighthouseid}
 
-    //- Update the action to point to the resource PUT endpoint
-    form(id='LighthouseForm', action="/resource/lighthouses/" + lighthouseid, method="PUT")
-      div.form-group
-        label.lighthouseAttr(for='name') Lighthouse Name
-        input#name(type='text', name='name', value= name )
-      div.form-group
-        label.lighthouseAttr(for='location') Location
-        input#location(type='text', name='location', value= location )
-      div.form-group
-        label.lighthouseAttr(for='height') Height
-        input#height(type='number', name='height', value= height )
-      input(type="submit")
+      form(id='LighthouseForm', action="/resource/lighthouses/" + lighthouseid, method="PUT")
+        div.form-group
+          label.lighthouseAttr(for='name') Name
+          input#name(type='text', name='name', value= name)
+        div.form-group
+          label.lighthouseAttr(for='location') Location
+          input#location(type='text', name='location', value= location)
+        div.form-group
+          label.lighthouseAttr(for='height') Height
+          input#height(type='number', name='height', value= height)
+        input(class="btn btn-success" type="submit")
 
     script.
       document.forms['LighthouseForm'].addEventListener('submit', (event) => {
         event.preventDefault();
-        // TODO do something here to show user that form is being submitted
         fetch(event.target.action, {
           method: 'PUT',
           body: new URLSearchParams(new FormData(event.target)) 
-        }).then((resp) => {
-          return resp.json(); 
-        }).then((body) => {
-          alert("Update succeeded")
-          // TODO handle body
-        }).catch((error) => {
-          alert("Update failed " + error )
-        });
+        }).then((resp) => resp.json())
+          .then((body) => alert("Update succeeded"))
+          .catch((error) => alert("Update failed " + error));
       });

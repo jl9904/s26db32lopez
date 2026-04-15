@@ -2,23 +2,26 @@ extends layout
 
 block content
   h1= title
+  
   if (toShow == null)
-    h2 No instance to display
+    h2 No instance to display for the provided ID.
+    button(class="btn btn-primary" onclick="window.location.href='/lighthouses'") Back to List
   else
     - let lighthouseid = toShow._id
     - let name = toShow.name
     - let location = toShow.location
     - let height = toShow.height
-    div
-      div.row
-        div(class='lighthouseAttr mr-3') Lighthouse ID is:
+
+    div(class="lighthouse-card")
+      div.row.mb-3
+        div(class='lighthouseAttr') Lighthouse ID
         div #{lighthouseid}
-      div.row
-        div(class='lighthouseAttr mr-3') Lighthouse Name is:
+      div.row.mb-3
+        div(class='lighthouseAttr') Name
         div #{name}
-      div.row
-        div(class='lighthouseAttr mr-3') Location is:
+      div.row.mb-3
+        div(class='lighthouseAttr') Location
         div #{location}
-      div.row
-        div(class='lighthouseAttr mr-3') Height is:
-        div #{height}ft
+      div.row.mb-3
+        div(class='lighthouseAttr') Height
+        div #{height} ft
