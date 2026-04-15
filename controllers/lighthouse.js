@@ -116,3 +116,17 @@ exports.lighthouse_create_Page = function(req, res) {
         res.send(`{'error': '${err}'}`);
     }
 };
+
+// Handle building the view for updating a lighthouse.
+// query provides the id
+exports.lighthouse_update_Page = async function(req, res) {
+    console.log("update view for item " + req.query.id)
+    try {
+        let result = await Lighthouse.findById(req.query.id)
+        res.render('lighthouseupdate', { title: 'Lighthouse Update', toShow: result });
+    }
+    catch(err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
