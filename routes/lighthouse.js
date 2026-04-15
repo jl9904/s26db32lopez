@@ -14,5 +14,8 @@ router.get('/create', lighthouse_controllers.lighthouse_create_Page);
 /* GET update lighthouse page */
 router.get('/update', lighthouse_controllers.lighthouse_update_Page);
 
+/* GET delete lighthouse page */
+router.get('/delete', lighthouse_controllers.lighthouse_delete_Page);
+
 module.exports = router;
 
