@@ -3,6 +3,29 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    Account.findOne({ username: username })
+      .then(function (user) {
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        user.authenticate(password, function(err, result) {
+            if (result) {
+                return done(null, user);
+            } else {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+        });
+      })
+      .catch(function(err) {
+        return done(err);
+      });
+  }
+));
 
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON;
@@ -36,7 +59,14 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+var Account = require('./models/account');
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -45,6 +75,10 @@ app.use('/lighthouses', lighthouseRouter);
 app.use('/grid', gridRouter);
 app.use('/selector', pickRouter);
 app.use('/resource', resourceRouter);
+// passport config
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 
 // catch 404 and forward to error handler
