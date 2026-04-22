@@ -3,12 +3,25 @@ extends layout
 block content
   h1= title
   - let items = results
+
   div(class="container-fluid")
     div(class="row m-1")
+      button.btn(class="btn-success", onclick="dispatch('/lighthouses/create')") Create New Lighthouse
+
+    div(class="row m-1")
       each item in items
-        - let destination = `dispatch(\"/lighthouses/update?id=${item._id}\")`
-        div(class="row-sm-2", class="m-1") Item #{item.name}(#{item.location}) is #{item.height}ft 
-          button.btn( class="btn-primary ml-1", onclick= destination) Update
+        - let updateDestination = `dispatch(\"/lighthouses/update?id=${item._id}\")`
+        - let detailDestination = `dispatch(\"/lighthouses/detail?id=${item._id}\")`
+        - let deleteDestination = `dispatch(\"/lighthouses/delete?id=${item._id}\")`
+
+        //- push buttons to align on the right side for cleaner layout
+        div(class="col-md-12 mb-2 p-2 border d-flex justify-content-between align-items-center") 
+          span(class="font-weight-bold") Lighthouse: #{item.name} (#{item.location}) — #{item.height}ft 
+          
+          div(class="btn-group")
+            button.btn(class="btn-info ml-1", onclick= detailDestination) Detail
+            button.btn(class="btn-primary ml-1", onclick= updateDestination) Update
+            button.btn(class="btn-danger ml-1", onclick= deleteDestination) Delete
 
   script.
     function dispatch(path){
